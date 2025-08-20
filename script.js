@@ -21,19 +21,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const checkboxes = document.querySelectorAll(".checklist input");
 
   checkboxes.forEach((checkbox, index) => {
-    // Skip the prank item
     if (checkbox.id === "prank-item") {
       checkbox.checked = true;
       checkbox.addEventListener("change", () => {
-        checkbox.checked = true; // force always checked
+        checkbox.checked = true;
       });
-      return; // don't store in localStorage
+      return;
     }
 
-    // Normal checkboxes → load from localStorage
     checkbox.checked = localStorage.getItem(`checkbox-${index}`) === "true";
 
-    // Save state when changed
     checkbox.addEventListener("change", () => {
       localStorage.setItem(`checkbox-${index}`, checkbox.checked);
     });
@@ -43,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("reset").addEventListener("click", () => {
     checkboxes.forEach((checkbox, index) => {
       if (checkbox.id === "prank-item") {
-        checkbox.checked = true; // stays checked
+        checkbox.checked = true;
         return;
       }
       checkbox.checked = false;
