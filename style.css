@@ -6,6 +6,13 @@ body {
   margin: auto;
 }
 
+img {
+  display: block;
+  margin: 0 auto 20px; /* centers it and adds space below */
+  max-width: 200px; /* keeps it responsive, adjust size as needed */
+  height: auto;
+}
+
 h1 {
   text-align: center;
   color: #6385eb;
