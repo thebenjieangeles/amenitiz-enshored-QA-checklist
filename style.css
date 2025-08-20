@@ -7,7 +7,8 @@ body {
 }
 
 img {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   margin: 0 auto 20px; /* centers it and adds space below */
   max-width: 200px; /* keeps it responsive, adjust size as needed */
   height: auto;
