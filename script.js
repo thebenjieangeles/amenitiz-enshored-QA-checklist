@@ -1,50 +1,16 @@
-// document.addEventListener("DOMContentLoaded", () => {
-//   const checkboxes = document.querySelectorAll(".checklist input");
+// index.js
 
-//   checkboxes.forEach((checkbox, index) => {
-//     checkbox.checked = localStorage.getItem(`checkbox-${index}`) === "true";
-
-//     checkbox.addEventListener("change", () => {
-//       localStorage.setItem(`checkbox-${index}`, checkbox.checked);
-//     });
-//   });
-
-//   document.getElementById("reset").addEventListener("click", () => {
-//     checkboxes.forEach((checkbox, index) => {
-//       checkbox.checked = false;
-//       localStorage.setItem(`checkbox-${index}`, false);
-//     });
-//   });
-// });
+// Placeholder for now – later we’ll add:
+// 1. Check if user is already logged in
+// 2. Redirect them straight to checklist.html if logged in
 
 document.addEventListener("DOMContentLoaded", () => {
-  const checkboxes = document.querySelectorAll(".checklist input");
+  console.log("Index page loaded.");
 
-  checkboxes.forEach((checkbox, index) => {
-    if (checkbox.id === "prank-item") {
-      checkbox.checked = true;
-      checkbox.addEventListener("change", () => {
-        checkbox.checked = true;
-      });
-      return;
-    }
+  // Example: fake check if logged in (we'll connect this to Firebase later)
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-    checkbox.checked = localStorage.getItem(`checkbox-${index}`) === "true";
-
-    checkbox.addEventListener("change", () => {
-      localStorage.setItem(`checkbox-${index}`, checkbox.checked);
-    });
-  });
-
-  // Reset button
-  document.getElementById("reset").addEventListener("click", () => {
-    checkboxes.forEach((checkbox, index) => {
-      if (checkbox.id === "prank-item") {
-        checkbox.checked = true;
-        return;
-      }
-      checkbox.checked = false;
-      localStorage.setItem(`checkbox-${index}`, false);
-    });
-  });
+  if (isLoggedIn) {
+    window.location.href = "checklist/checklist.html";
+  }
 });
