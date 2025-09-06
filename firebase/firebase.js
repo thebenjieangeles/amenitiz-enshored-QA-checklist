@@ -1,21 +1,21 @@
-// Import Firebase core & services
+// Import Firebase core, auth & firestore
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-// ✅ Firebase config (from Firebase Console)
+// Your Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyAH13KuLRYKdYzkUPnac9c61RcQ62lj-Vw",
   authDomain: "qa-checklist-85257.firebaseapp.com",
   projectId: "qa-checklist-85257",
-  storageBucket: "qa-checklist-85257.appspot.com", // ✅ fixed domain
+  storageBucket: "qa-checklist-85257.firebasestorage.app",
   messagingSenderId: "691151991050",
   appId: "1:691151991050:web:6fce8ed12fffdc82eecaf3",
 };
 
-// ✅ Initialize Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// ✅ Export Firebase services
+// Export Auth & Firestore
 export const auth = getAuth(app);
-export const storage = getStorage(app); // ready for uploads/downloads
+export const db = getFirestore(app);
