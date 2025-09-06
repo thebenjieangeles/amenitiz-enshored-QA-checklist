@@ -8,7 +8,6 @@ import {
   doc,
   getDoc,
   setDoc,
-  updateDoc,
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 let currentUser = null;
@@ -44,30 +43,39 @@ async function loadChecklist() {
 
   try {
     const docSnap = await getDoc(checklistRef);
-    let savedData = {};
+    let savedData = docSnap.exists() ? docSnap.data() : {};
 
-    if (docSnap.exists()) {
-      savedData = docSnap.data();
-    }
+    console.log("📥 Loaded checklist:", savedData);
 
-    // Apply saved state to checkboxes
+    // Apply saved state
     checkboxes.forEach((checkbox, index) => {
-      checkbox.checked = savedData[`box-${index}`] || false;
+      checkbox.checked = !!savedData[`box-${index}`];
 
       checkbox.addEventListener("change", async () => {
-        await updateDoc(checklistRef, {
-          [`box-${index}`]: checkbox.checked,
-        }).catch(async () => {
-          // If doc doesn't exist yet, create it
-          await setDoc(checklistRef, { [`box-${index}`]: checkbox.checked });
-        });
+        console.log(
+          `💾 Saving box-${index}: ${checkbox.checked} for user ${currentUser.uid}`
+        );
+        try {
+          await setDoc(
+            checklistRef,
+            { [`box-${index}`]: checkbox.checked },
+            { merge: true } // ✅ ensures we don't overwrite other boxes
+          );
+        } catch (err) {
+          console.error("❌ Error saving checkbox:", err);
+        }
       });
     });
 
-    // Reset button → clears Firestore
+    // Reset button → clears Firestore and UI
     document.getElementById("reset").addEventListener("click", async () => {
-      checkboxes.forEach((checkbox) => (checkbox.checked = false));
-      await setDoc(checklistRef, {}); // reset Firestore document
+      checkboxes.forEach((c) => (c.checked = false));
+      try {
+        await setDoc(checklistRef, {}); // overwrite with empty object
+        console.log("🧹 Checklist reset for user:", currentUser.uid);
+      } catch (err) {
+        console.error("❌ Error resetting checklist:", err);
+      }
     });
   } catch (error) {
     console.error("❌ Error loading checklist:", error);
