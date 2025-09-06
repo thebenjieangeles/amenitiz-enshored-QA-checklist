@@ -6,8 +6,15 @@
     <link rel="stylesheet" href="./checklist.css" />
   </head>
   <body>
-    <img src="../assets/logo-no-bg.png" alt="Logo" />
-    <h1>QA Checklist</h1>
+    <header class="top-bar">
+      <img src="../assets/logo-no-bg.png" alt="Logo" />
+      <h1>QA Checklist</h1>
+      <!-- 🔑 User info + logout -->
+      <div class="user-controls">
+        <span id="user-email"></span>
+        <button id="logout" class="logout-btn">Logout</button>
+      </div>
+    </header>
 
     <div class="container">
       <!-- Main Content -->
@@ -45,6 +52,7 @@
           </li>
         </ul>
 
+        <!-- 🔥 ALL YOUR OTHER SECTIONS ARE KEPT -->
         <h2 id="home">Home Page</h2>
         <ul class="checklist">
           <li>
@@ -180,6 +188,8 @@
       </div>
     </div>
 
-    <script src="./checklist.js"></script>
+    <!-- Firebase + checklist logic -->
+    <script type="module" src="../firebase/firebase.js"></script>
+    <script type="module" src="./checklist.js"></script>
   </body>
 </html>

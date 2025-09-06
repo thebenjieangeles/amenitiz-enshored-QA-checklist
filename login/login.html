@@ -11,11 +11,23 @@
       <h1>Login</h1>
 
       <div class="form-group">
-        <input type="text" id="username" placeholder="Username" required />
+        <input
+          type="email"
+          id="email"
+          placeholder="Email"
+          autocomplete="username"
+          required
+        />
       </div>
 
       <div class="form-group">
-        <input type="password" id="password" placeholder="Password" required />
+        <input
+          type="password"
+          id="password"
+          placeholder="Password"
+          autocomplete="current-password"
+          required
+        />
       </div>
 
       <button id="login">Login</button>
@@ -23,12 +35,11 @@
 
       <p id="message" class="message"></p>
 
-      <p class="small-text">
-        This is just a mockup. Firebase connection comes later 🚀
-      </p>
+      <p class="small-text">Connected with Firebase Authentication 🚀</p>
     </div>
 
-    <!-- link external JS -->
-    <script src="./login.js"></script>
+    <!-- Firebase App & Auth SDK -->
+    <script type="module" src="../firebase/firebase.js"></script>
+    <script type="module" src="./login.js"></script>
   </body>
 </html>

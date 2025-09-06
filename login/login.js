@@ -1,8 +1,11 @@
-// Mock users for demo purposes
-const mockUsers = [
-  { username: "admin", password: "admin123", role: "admin" },
-  { username: "user", password: "user123", role: "user" },
-];
+// Import Firebase
+import { auth } from "../firebase/firebase.js";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 const messageBox = document.getElementById("message");
 
@@ -12,55 +15,78 @@ function showMessage(text, type) {
   messageBox.style.display = "block";
 }
 
+// ✅ Check if already logged in (auto redirect)
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    window.location.href = "../checklist/checklist.html";
+  }
+});
+
 // Handle login
 document.getElementById("login").addEventListener("click", () => {
-  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  if (!username || !password) {
-    showMessage("⚠️ Please enter both username and password.", "error");
+  if (!email || !password) {
+    showMessage("⚠️ Please enter both email and password.", "error");
     return;
   }
 
-  const user = mockUsers.find(
-    (u) => u.username === username && u.password === password
-  );
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      showMessage(`✅ Welcome, ${user.email}! Redirecting...`, "success");
 
-  if (user) {
-    localStorage.setItem("loggedInUser", JSON.stringify(user));
-    showMessage(`✅ Welcome, ${user.username}! Redirecting...`, "success");
-
-    // Redirect after 1s
-    setTimeout(() => {
-      window.location.href = "../checklist/checklist.html";
-    }, 1000);
-  } else {
-    showMessage("❌ Invalid username or password.", "error");
-  }
+      setTimeout(() => {
+        window.location.href = "../checklist/checklist.html";
+      }, 1000);
+    })
+    .catch((error) => {
+      showMessage(formatError(error.code), "error");
+    });
 });
 
 // Handle signup
 document.getElementById("signup").addEventListener("click", () => {
-  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  if (!username || !password) {
-    showMessage(
-      "⚠️ Please enter both username and password to sign up.",
-      "error"
-    );
+  if (!email || !password) {
+    showMessage("⚠️ Please enter both email and password to sign up.", "error");
     return;
   }
 
-  const exists = mockUsers.some((u) => u.username === username);
-  if (exists) {
-    showMessage("⚠️ Username already exists. Please choose another.", "error");
-    return;
-  }
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      showMessage(
+        `🎉 Account created for ${user.email}. Redirecting...`,
+        "success"
+      );
 
-  mockUsers.push({ username, password, role: "user" });
-  showMessage(
-    `🎉 Account created for ${username}. You can now log in.`,
-    "success"
-  );
+      // ✅ Auto-redirect after signup
+      setTimeout(() => {
+        window.location.href = "../checklist/checklist.html";
+      }, 1000);
+    })
+    .catch((error) => {
+      showMessage(formatError(error.code), "error");
+    });
 });
+
+// ✅ Friendlier error messages
+function formatError(code) {
+  switch (code) {
+    case "auth/invalid-email":
+      return "❌ Invalid email format.";
+    case "auth/user-not-found":
+    case "auth/wrong-password":
+      return "❌ Incorrect email or password.";
+    case "auth/email-already-in-use":
+      return "⚠️ This email is already registered.";
+    case "auth/weak-password":
+      return "⚠️ Password should be at least 6 characters.";
+    default:
+      return "⚠️ Something went wrong. Please try again.";
+  }
+}
