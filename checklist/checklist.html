@@ -3,63 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <title>Checklist</title>
-    <link rel="stylesheet" href="./checklist.css" />
+    <link rel="stylesheet" href="checklist.css" />
   </head>
   <body>
-    <header class="top-bar">
-      <div class="brand">
-        <img src="../assets/logo-no-bg.png" alt="Logo" />
-        <h1>QA Checklist</h1>
-      </div>
-
-      <!-- 🔑 User info + logout -->
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <h1>Amenitiz Website Creation Checklist</h1>
       <div class="user-controls">
         <span id="user-email"></span>
         <button id="logout" class="logout-btn">Logout</button>
       </div>
-    </header>
+    </div>
 
     <div class="container">
       <!-- Main Content -->
       <div class="main-content">
-        <h2 id="critical">⚠️ Critical Items Checklist (Consolidated)</h2>
-        <ul class="checklist">
-          <li>
-            <input type="checkbox" />SEO meta description present (Home,
-            Accommodations, Surroundings, Contact)
-          </li>
-          <li>
-            <input type="checkbox" />H1 present (Home, Accommodations,
-            Surroundings, Contact)
-          </li>
-          <li>
-            <input type="checkbox" />Booking button in header always visible
-            (Home)
-          </li>
-          <li>
-            <input type="checkbox" />Font style consistent (only free-to-use
-            fonts)
-          </li>
-          <li>
-            <input type="checkbox" />Placeholder images free-to-use
-            (Accommodations)
-          </li>
-          <li><input type="checkbox" />License included (Footer)</li>
-          <li><input type="checkbox" />Complaints book included (Footer)</li>
-          <li>
-            <input type="checkbox" />CIN terminology correct (IT websites only)
-          </li>
-          <li>
-            <input type="checkbox" />Chamada de rede fixa nacional ou de rede
-            móvel nacional (PT websites)
-          </li>
-          <li>
-            <input type="checkbox" />Property singular or plural(header and text
-            blocks)
-          </li>
-        </ul>
-
-        <!-- 🔥 ALL YOUR OTHER SECTIONS ARE KEPT -->
+        <!-- 📌 Checklist Sections -->
         <h2 id="home">Home Page</h2>
         <ul class="checklist">
           <li>
@@ -179,13 +138,73 @@
         </ul>
 
         <button id="reset">Reset Checklist</button>
+        <!-- 📌 Project Details -->
+        <h2>Project Details</h2>
+        <div class="project-details card">
+          <label>Hotel Name</label>
+          <input type="text" id="hotel-name" placeholder="Enter hotel name" />
+
+          <label>Web Created</label>
+          <input
+            type="text"
+            id="hotel-website"
+            placeholder="Enter website URL"
+          />
+
+          <label>Web Duplicated</label>
+          <input
+            type="text"
+            id="website-duplicate"
+            placeholder="Enter website duplicate URL"
+          />
+
+          <label>Hubspot</label>
+          <input type="text" id="hubspot" placeholder="Enter Hubspot link" />
+
+          <label>OTA</label>
+          <input type="text" id="ota" placeholder="Enter OTA details" />
+
+          <label>Notes from OnBoarder</label>
+          <textarea
+            id="onboarder-notes"
+            rows="3"
+            placeholder="Enter notes from onboarder"
+          ></textarea>
+
+          <label>Evaluator Snippet</label>
+          <textarea
+            id="evaluator-snippet"
+            rows="3"
+            placeholder="Enter notes for evaluator"
+          ></textarea>
+
+          <label>Upload Files (PDF, Images)</label>
+          <input
+            type="file"
+            id="file-upload"
+            multiple
+            accept=".pdf,.jpg,.jpeg,.png"
+          />
+          <ul id="file-list"></ul>
+
+          <div class="form-actions">
+            <button id="new-project" class="btn-secondary">
+              ➕ New Project
+            </button>
+            <button id="save-project" class="btn-primary">
+              💾 Save Project
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Sidebar -->
       <div class="sidebar">
+        <h2>Projects</h2>
+        <ul id="projects-list"></ul>
+
         <h2>Quick Links</h2>
         <ul>
-          <li><a href="#critical">Critical Items</a></li>
           <li><a href="#home">Home Page</a></li>
           <li><a href="#footer">Footer</a></li>
           <li><a href="#accommodations">Accommodations</a></li>
